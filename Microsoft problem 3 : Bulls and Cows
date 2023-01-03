@@ -1,0 +1,24 @@
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+
+        int cows = 0, bulls = 0;
+       vector<int> cowsinS(10,0),cowsinG(10,0);
+        
+        for(int i = 0; i<secret.size(); i++)
+        {
+                if(secret[i] == guess[i])
+                    bulls++;
+                else{
+                cowsinS[secret[i]-'0']++;
+                    cowsinG[guess[i]-'0']++;
+                }
+            }
+        for(int i=0; i<cowsinG.size();i++)
+        {
+            cows += min(cowsinS[i],cowsinG[i]);
+        }
+        cout<< cows<<" "<<bulls;
+       return to_string(bulls)+'A'+to_string(cows)+'B';
+    }
+};
