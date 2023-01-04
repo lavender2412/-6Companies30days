@@ -1,0 +1,30 @@
+class Solution {
+public:
+    long long answer = 0;
+    long long numberOfPairs(vector<int>& a, vector<int>& b, int d) {
+         int n = a.size();
+         vector<int> c(n);
+         for(int i=0; i<n; i++) c[i] = a[i] - b[i];
+         mergeSort(0,n-1,c,d);
+         return answer;
+    }
+    void mergeSort(int low,int high,vector<int> &c,int d) {
+         if(low == high) return;
+         int mid = (low + high)/2;
+         mergeSort(low,mid,c,d);
+         mergeSort(mid+1,high,c,d);
+         merge(low,mid,high,c,d);
+    }
+    void merge(int low,int mid,int high,vector<int>&c,int d) {
+         int i = low , j = mid + 1;
+         while(i <= mid && j<= high) {
+               if((c[i] - c[j]) <= d) {
+                   answer += (high - j + 1);
+                   i++;
+               }else {
+                  j++;
+               }
+         }
+        sort(c.begin()+low,c.begin()+high+1);
+    }
+};
