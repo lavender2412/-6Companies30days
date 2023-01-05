@@ -1,0 +1,32 @@
+class Solution {
+public:
+     long operatorFunc(int a, int b, char op){
+        if(op == '+')
+            return a + b;
+        else if(op == '-') 
+            return a - b;
+        else if(op == '*')
+            return (long)a*b;
+        return a/b;
+    }
+    int evalRPN(vector<string>& tokens) {
+        stack<long> st;
+        int n = tokens.size();
+        for(int i = 0; i < n; i++){
+            if(tokens[i].size() == 1 and tokens[i][0] < 48){
+                long num1 = st.top();
+                st.pop();
+                long num2 = st.top();
+                st.pop();
+                char op = tokens[i][0];
+                long answer = operatorFunc(num2, num1 , op);
+               // cout << answer;
+                st.push(answer);
+            }else {
+             cout << stol(tokens[i])<<" ";   
+                st.push(stol(tokens[i]));
+            }
+        }
+        return st.top();
+    }
+};
