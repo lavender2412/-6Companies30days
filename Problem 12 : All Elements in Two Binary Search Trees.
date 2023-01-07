@@ -1,0 +1,19 @@
+//my solution
+class Solution {
+    void inOrder(TreeNode* root, vector<int>& answer) 
+    {
+        if(root==NULL)
+             return;
+        inOrder(root->left,answer);
+        answer.push_back(root->val);
+        inOrder(root->right,answer);
+    }
+public:
+    vector<int> answer;
+    vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
+        inOrder(root1,answer);
+        inOrder(root2,answer);
+        sort(answer.begin(),answer.end());
+        return answer;
+    }
+};
