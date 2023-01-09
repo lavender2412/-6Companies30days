@@ -1,0 +1,18 @@
+class Solution {
+public:
+    // well done , look into it definitely 
+    int minimumCardPickup(vector<int>& cards) {
+        unordered_map<int,int>map;
+        int ans = INT_MAX, n = cards.size();
+        for(int i=0;i<n;i++)
+        {
+            if(map.find(cards[i]) != map.end())
+            {
+                ans = min(ans, i-map[cards[i]]+1);
+            }
+                map[cards[i]] = i;
+        }
+       if(map.size() == n) return -1;
+        return ans;
+    }
+};
