@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int rev(int n) {
+    int revVal = 0;
+    while(n>0)
+    {
+        revVal = revVal*10 + n%10;
+        n/=10;
+    }
+    return revVal;
+}
+int countNicePairs(vector<int>& nums) {
+    unordered_map<int, int> map;
+    int answer = 0 , n = nums.size();
+    for (int i = 0 ; i < n; i++)
+        answer = (answer + map[nums[i]- rev(nums[i])]++) % 1000000007;
+    return answer;
+}
+};
