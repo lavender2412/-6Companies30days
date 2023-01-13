@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int findUnsortedSubarray(vector<int>& nums) {
+        int answer = 0, n = nums.size();
+        vector<int> temp = nums;
+        sort(temp.begin(),temp.end());
+        int low,high;
+        for( low=0;low<n;)
+        {
+            if(temp[low]==nums[low])
+                low++;
+            else break;
+        }
+        for( high=n-1;high>=0;)
+        {
+            if(temp[high]==nums[high])
+                high--;
+            else break;
+        }
+        cout << low <<" "<< high;
+        if(low < high) return high-low+1;
+        return 0;
+        
+    }
+};
