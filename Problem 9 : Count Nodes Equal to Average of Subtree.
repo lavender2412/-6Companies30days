@@ -1,0 +1,41 @@
+  //solution -1 :
+    /*
+    int countOfSubTree(TreeNode* root){
+        if(root == NULL) return 0;
+        return 1 + countOfSubTree(root->left) + countOfSubTree(root->right);
+    }
+    int sumOfSubTree(TreeNode* root){
+       if(root == NULL) return 0;
+        return root->val + sumOfSubTree(root->right) + sumOfSubTree(root->left);
+    }
+    int averageOfSubtree(TreeNode* root) {
+        if(root == NULL)   return 0;
+        int answer = averageOfSubtree(root->left) + averageOfSubtree(root->right);
+        return sumOfSubTree(root) / countOfSubTree(root)==root->val ? answer + 1 : answer;
+    }*/
+    class Solution {
+public:
+//solution-2 : 
+    int answer = 0;
+    pair<int,int> solve(TreeNode* root){
+        if(root == NULL) return {0,0};
+        
+        auto left = solve(root->left);
+        int leftSum = left.first; 
+        int leftCount = left.second;
+        
+        auto right = solve(root->right);
+        int rightSum = right.first; 
+        int rightCount = right.second; 
+        
+        int sum = root->val + leftSum + rightSum;
+        int cnt = leftCount + rightCount + 1;
+        
+        if(root->val == sum/cnt) answer++;
+        return {sum,cnt};
+    }
+    int averageOfSubtree(TreeNode* root) {
+        solve(root);
+        return answer;
+    }
+};
