@@ -1,0 +1,34 @@
+class StockPrice {
+public:
+     multiset<int> value;
+    map<int,int> timeStampp;
+   
+    StockPrice() {
+        timeStampp.clear();
+        value.clear();
+    }
+    void update(int timestamp, int price) {
+        if (timeStampp.find(timestamp) != timeStampp.end()){
+            int prev = timeStampp[timestamp];
+            value.erase(value.find(prev));
+            value.insert(price);
+            timeStampp[timestamp] = price;
+        }
+        else{
+            value.insert(price);
+            timeStampp[timestamp] = price;
+        }
+        
+    }
+    int current() {
+        return (timeStampp.rbegin()) -> second;
+    }
+    
+    int maximum() {
+        return *(value.rbegin());
+    }
+    
+    int minimum() {
+        return *(value.begin());
+    }
+};
