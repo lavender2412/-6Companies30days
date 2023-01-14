@@ -1,0 +1,38 @@
+class Solution {
+public:
+#define ll long long 
+    string fractionToDecimal(int num, int denom) {
+        if (num==0)
+            return "0";
+        string answer;
+        
+        if ((num < 0 && denom > 0 )|| (num >0 && denom <0)) // signed int
+            answer.push_back('-');
+        
+        num= abs(num);
+        denom= abs(denom);
+        ll int quotient= num/denom;
+        ll int remainder= num%denom;
+        answer += to_string(quotient);
+        if (remainder==0)
+            return answer;
+        answer += '.';
+        unordered_map<int, int> map; // store the length of each quotient for occurered remainder
+        while (remainder != 0){
+            if (map.find(remainder) != map.end()){
+                int pos= map[remainder];
+                answer.insert(pos,"(");
+                answer += ')';
+                break;
+            }
+            else {
+                map[remainder]= answer.length();
+                remainder *= 10; // overflow
+                quotient= remainder/denom;
+                remainder= remainder%denom;
+                answer += to_string(quotient);
+            }
+        }
+        return answer;
+    }
+};
