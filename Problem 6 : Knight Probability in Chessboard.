@@ -1,0 +1,39 @@
+class Solution {
+public:
+    
+    double knightProbability(int N, int K, int r, int c){
+
+        if(K==0) return 1.0;
+         int cx,cy;
+        vector<vector<double>> parent(N,vector<double>(N,0.0)),child(N,vector<double>(N,0.0));
+        int row[] = {-2,-2,-1,-1,2,2,1,1};
+        int col[] = {1,-1,2,-2,1,-1,2,-2};
+        parent[r][c] = 1.0;
+        for(int i=0;i<K;i++)
+        {   for(int j=0;j<N;j++)
+            {
+                for(int l=0;l<N;l++)
+                { 
+                    double move = parent[j][l]/8.0;
+                    for(int w=0;w<8;w++)
+                    {
+                        cx = j + row[w];
+                        cy = l + col[w];
+                        if(cx>=0 && cx<N && cy>=0 && cy<N)
+                            child[cx][cy] += move;
+                    }                    
+                }
+            }
+            
+            parent = child;
+            fill(child.begin(),child.end(),vector<double>(N,0.0));
+        }
+        double knight = 0.0;
+        
+        for(int j=0;j<N;j++)
+            for(int l=0;l<N;l++)
+                   knight+=parent[j][l];
+
+        return knight;
+    }
+};
