@@ -1,0 +1,33 @@
+class Solution {
+public:
+    ListNode* removeZeroSumSublists(ListNode* head) {
+
+      // Attaching one extra node at start of list : entire list make sum 0 then we have to previous node required for deletion 
+      ListNode *dummy = new ListNode(0) , *curr = dummy;
+      dummy->next = head;
+      unordered_map<int,ListNode*> nodeMap;
+      int pre = 0 ; 
+      while (curr)
+      {
+          pre += curr->val;
+          if(nodeMap.count(pre) != 0) 
+          {
+             int sum = pre;        
+             curr = nodeMap[pre]->next;
+             sum += curr->val;
+             while(sum != pre)
+             {   
+                 curr = curr->next;
+                  nodeMap.erase(sum);
+                sum += curr->val;
+             }
+             nodeMap[pre]->next = curr->next;
+          }
+          else 
+            nodeMap[pre] = curr;
+
+          curr = curr->next;
+      } 
+      return dummy->next;
+    }
+};
