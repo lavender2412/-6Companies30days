@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool hasAllCodes(string s, int k) {
+         int val = 1 << k,put  = val,curr=0;
+        vector<bool> get(val, false);
+        for (int i=0; i<s.size(); i++) {
+            curr <<= 1; 
+            curr &= ~val; 
+            if (s[i] == '1') 
+                curr |= 1;
+            
+            if (i >= k-1 && !get[curr]) {
+                get[curr] = true;
+                put--;
+                if (!put) {
+                    return true;
+                }
+            }
+        }
+    
+        return false;
+    }
+};
