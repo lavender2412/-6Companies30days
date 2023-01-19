@@ -1,0 +1,24 @@
+class Solution {
+public:
+    map<TreeNode*,int> answer;
+    int rob(TreeNode* root) {
+        if(root==NULL)
+            return 0;
+        if(answer[root])
+          return answer[root];
+        
+        int cnt0=root->val;
+        
+        if(root->left!=NULL)
+        
+            cnt0 += (rob(root->left->left)+rob(root->left->right));
+        
+        if(root->right!=NULL)
+        {
+             cnt0 += (rob(root->right->left)+rob(root->right->right));
+        }
+        int cnt=0;
+        cnt=rob(root->left)+rob(root->right);
+        return answer[root]=max(cnt0,cnt);
+    }
+};
