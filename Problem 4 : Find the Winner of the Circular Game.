@@ -1,0 +1,40 @@
+class Node{
+    public:
+    int val;
+    Node *next;
+
+    Node(int val){
+        this->val = val;
+        this->next = nullptr;
+    }
+};
+class Solution {
+public:
+    int findTheWinner(int n, int k) {
+        if(k == 1)
+            return n;
+        Node *head = new Node(1), *dummy = head;
+        
+        for(int i=2;i <= n;i++){
+            dummy->next = new Node(i);
+            dummy = dummy->next;
+        }
+        
+        dummy->next = head;
+        int count = k-1;
+        
+        dummy = head;
+        while(dummy->next!=dummy){
+            while(count > 1)
+            {
+                dummy = dummy->next;
+               count--;
+            }
+            dummy->next = dummy->next->next;
+            dummy = dummy->next;
+            count = k-1;
+        }
+
+        return dummy->val;
+    }
+};
