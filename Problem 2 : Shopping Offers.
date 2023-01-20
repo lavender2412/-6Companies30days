@@ -1,0 +1,58 @@
+// check the given java solution
+class Solution {
+    public int shoppingOffers(List<Integer> price, List<List<Integer>> specials, List<Integer> needs) {
+        if (hasBoughtEverything(needs)) return 0;
+        
+        int minPrice = getNoDiscountPrice(needs, price);
+        
+        for (List<Integer> special: specials) {
+            if (canBuy(needs, special)) {
+                int salePrice = special.get(special.size() - 1);
+                List<Integer> remainingItems = buyItemsFromSale(needs, special);
+                minPrice = Math.min(minPrice, shoppingOffers(price, specials, remainingItems) + salePrice);
+            }
+        }
+        
+        return minPrice;
+    }
+    
+    private List<Integer> buyItemsFromSale(List<Integer> needs, List<Integer> special) {
+        List<Integer> remainingItems = new ArrayList<>();
+        
+        for (int i = 0; i < needs.size(); i++) {
+            remainingItems.add(needs.get(i) - special.get(i));
+        }
+        
+        return remainingItems;
+    }
+    
+    private boolean canBuy(List<Integer> needs, List<Integer> special) {
+        for (int i = 0; i < needs.size(); i++) {
+            if (needs.get(i) < special.get(i)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    private int getNoDiscountPrice(List<Integer> needs, List<Integer> price) {
+        int totalPrice = 0;
+        
+        for (int i = 0; i < needs.size(); i++) {
+            totalPrice += (needs.get(i) * price.get(i));
+        }
+        
+        return totalPrice;
+    }
+    
+    private boolean hasBoughtEverything(List<Integer> needs) {
+        for (int item: needs) {
+            if (item != 0) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
