@@ -1,0 +1,54 @@
+class Solution {
+public:
+    int leftBS(MountainArray &mountainArr,int low,int high,int target){
+        while(low <= high){
+            int mid = low+(high-low)/2;
+            if(mountainArr.get(mid)==target) 
+                
+                return mid;
+           else if(mountainArr.get(mid)<target)
+                
+               low=mid+1;
+            else
+                high = mid-1;
+        }
+        return -1;
+    }
+    int rightBS(MountainArray &mountainArr,int low,int high,int target){
+        while(low <= high){
+            int mid=low+(high-low)/2;
+            
+            if(mountainArr.get(mid)==target)
+                return mid;
+            else if(mountainArr.get(mid)>target) 
+                low = mid+1;
+            else
+                high = mid-1;
+        }
+        return -1;
+    }
+    int findInMountainArray(int target, MountainArray &mountainArr) {
+        
+        int n=mountainArr.length(),low = 0,high = n-1,peak;
+        
+        while(low < high){
+            
+            int mid=low + (high-low)/2;
+            
+            if(mountainArr.get(mid+1) > mountainArr.get(mid)){
+                low = mid+1;
+                peak=mid+1;
+            }
+            else
+                high=mid;
+        }
+        int left = leftBS(mountainArr,0,peak,target); 
+        
+        int right = rightBS(mountainArr,peak,n-1, target); 
+        
+        if(left >= 0) 
+            return left;
+        return right;
+ 
+    }
+};
