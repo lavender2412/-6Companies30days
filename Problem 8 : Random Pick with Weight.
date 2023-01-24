@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> vect;
+    Solution(vector<int>& w) {
+        int n = w.size();
+        vect.push_back(w[0]);
+        for(int i = 1; i < n; i++) {
+            vect.push_back(vect[i - 1] + w[i]);
+        }
+    }
+    
+    int pickIndex() {
+        int n = rand() % vect[vect.size() - 1];
+        auto it = upper_bound(vect.begin(), vect.end(), n);
+        return (it - vect.begin());
+    }
+};
+
+/**
