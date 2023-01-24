@@ -1,0 +1,14 @@
+class Solution {
+public:
+   int totalFruit(vector<int>& nums) {
+        int left = 0, right = 0, cntFirst = 0, cntLast = 0, curr = 0, maxVal = 0;
+        for (auto x : nums) {
+            
+            curr = (x == left || x == right) ? curr + 1 : cntLast + 1;
+            cntLast = (x == right) ? cntLast + 1 : 1;
+            if (x != right) left = right, right = x;
+            maxVal = max(maxVal, curr);
+        }
+        return maxVal;
+    }
+};
