@@ -1,0 +1,31 @@
+class Solution {
+private:
+    void heapify(vector<int> &nums, int n, int i) {
+        
+        int largest=i, child1=2*i+1, child2=2*i+2;
+        if(child1<n && nums[child1]>nums[largest])        largest=child1;
+    
+        if(child2<n && nums[child2]>nums[largest])     largest=child2;
+        
+        if(largest!=i) {
+            swap(nums[i], nums[largest]);
+            heapify(nums, n, largest);
+        }
+    }
+    void buildingHeap(vector<int>& nums, int n) {
+        for(int i= n/2-1; i >= 0; i--) {
+            
+            heapify(nums, n, i);
+        }
+    }
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        int n=nums.size();
+        buildingHeap(nums, n);
+        for(int i=n-1; i>=0; i--) {
+            swap(nums[0], nums[i]);
+            heapify(nums, i, 0);
+        }
+        return nums;
+    }
+};
