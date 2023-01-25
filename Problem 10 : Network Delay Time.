@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<pair<int, int>> adj[101];
+    
+    void DFS(vector<int>& receive, int node, int time) {
+      
+        if (time >= receive[node]) 
+            //nothing
+            return;
+        receive[node] = time;
+        for (pair<int, int> edge : adj[node]) {
+            int travelTime = edge.first;
+            int neighborNode = edge.second;
+            DFS(receive, neighborNode, time + travelTime);
+        }
+    }
+    
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+            for(int i=0;i<times.size();i++) 
+                adj[times[i][0]].push_back({times[i][2],times[i][1]}); 
+        for (int i = 1; i <= n; i++) 
+            sort(adj[i].begin(), adj[i].end());
+        
+        vector<int> receive(n + 1, INT_MAX);
+        DFS(receive, k, 0);
+        int answer = INT_MIN;
+        for (int node = 1; node <= n; node++) {
+            answer = max(answer, receive[node]);
+        }
+        if(answer == INT_MAX) return -1;
+        return answer;
+     }
+};
