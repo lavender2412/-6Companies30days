@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int answer=0;
+    void find(vector<vector<int>>&statements,vector<int>&vect,int n)
+    {
+        if (n==statements.size())
+        {
+            answer = max(answer,Count(statements,vect));
+            return;
+        }
+        
+        vect[n]=0;
+        find(statements,vect,n+1);
+        //backtracking
+        vect[n]=1;
+        find(statements,vect,n+1);
+    }
+    int Count(vector<vector<int>>&statements,vector<int>&vect)
+    {
+        int count=0,n=vect.size();
+        for(int i=0;i<n;i++)
+        {
+            if (vect[i] == 1)
+            {
+                for(int j=0;j<n;j++)
+                {
+                    if (statements[i][j]!=2 && vect[j]!=statements[i][j])
+                        return 0;
+                }
+                count++;
+            }
+        }
+        return count;
+    }
+    int maximumGood(vector<vector<int>>& statements) 
+    {
+        int n = statements.size();
+        vector<int>v (n,0);
+        find(statements,v,0);
+        return answer;
+    }
+};
