@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool occurenceCheck(string s1,string s2){
+        if(s1.length()<s2.length())return false;
+        int p1 = 0, p2 = 0;
+        while(p1<s1.length() && p2<s2.length()){
+            if(s1[p1]==s2[p2]){
+                p2++;
+            }
+            p1++;
+        }
+        return (p2==s2.length());
+    }
+    int numMatchingSubseq(string s, vector<string>& words) {
+        int answer = 0;
+        unordered_map<string,int> map;
+        for(auto &i: words){
+            if(map.count(i)){
+                answer += map[i];
+            }else{
+                answer += map[i] = occurenceCheck(s,i);
+            }
+        }
+        return answer;
+    }
+};
