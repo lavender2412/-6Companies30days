@@ -1,0 +1,32 @@
+class Solution 
+{
+public:
+    int findUnique(string s, set<string> visited)
+    {
+        int n = s.size();
+        if(n==0 || n==1) 
+        return n;
+        if(visited.find(s) != visited.end()) 
+            return 0;// found
+        int answer=1;
+        for(int k=1; k<n; k++)
+        {
+            string s1=s.substr(0,k);
+            string s2=s.substr(k);
+            if(visited.find(s1) == visited.end())
+            {
+                visited.insert(s1);
+                int val = 1 + findUnique(s2,visited);
+                answer = max(answer,val);
+                auto it=visited.find(s1);
+                visited.erase(it);
+            }
+        }
+        return answer;
+    }
+    int maxUniqueSplit(string s) 
+    {
+        set<string> visited;
+        return findUnique(s,visited);
+    }
+};
