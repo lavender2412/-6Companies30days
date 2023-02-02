@@ -1,0 +1,15 @@
+bool asteroidsDestroyed(int mass, vector<int>& asteroids) {
+ 
+    long long int maxi=mass;
+    
+    sort(asteroids.begin(),asteroids.end());      
+    for(int i=0;i<asteroids.size();i++){
+    
+        if(maxi>=asteroids[i])
+            maxi+=asteroids[i];
+        else
+            return false;
+        
+    }
+    return true;
+}
